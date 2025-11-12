@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'video',
+
 
     'django_cleanup.apps.CleanupConfig',
 ]
@@ -179,11 +181,11 @@ UNFOLD = {
                         "link": reverse_lazy("admin:auth_user_changelist"),
                         "permission": lambda request: request.user.has_perm("auth.view_user")
                     },
-                    # {
-                    #     "title": "Upload",
-                    #     "icon": "upload",
-                    #     "link": reverse_lazy("admin:video_videomodel_changelist")
-                    # },
+                    {
+                        "title": "Upload",
+                        "icon": "upload",
+                        "link": reverse_lazy("admin:video_videomodel_changelist")
+                    },
                 ]
             }
         ]
