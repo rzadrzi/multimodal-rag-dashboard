@@ -12,7 +12,7 @@ class VideoModel(models.Model):
         verbose_name_plural = 'Uploads'
 
     title = models.CharField(max_length=255, null=True, blank=True)
-    slug = models.SlugField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
     video = models.FileField(upload_to="upload/videos")
     audio = models.FileField(upload_to="upload/audios", blank=True, null=True)
     transcript_text = models.TextField(blank=True, null=True)
