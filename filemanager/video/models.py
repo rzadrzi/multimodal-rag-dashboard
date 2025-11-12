@@ -1,3 +1,5 @@
+from random import choice
+
 from django.db import models
 
 # Create your models here.
@@ -7,12 +9,19 @@ class VideoModel(models.Model):
     and with ASR Models and Whisper Models Return back Audios and transcripts files.
     All these in background
     """
+    LANG = {
+        'FA':'fa',
+        'EN':'en'
+    }
+
+
     class Meta:
         verbose_name = 'Upload'
         verbose_name_plural = 'Uploads'
 
     title = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    lang = models.CharField(choices=LANG)
     video = models.FileField(upload_to="upload/videos")
     audio = models.FileField(upload_to="upload/audios", blank=True, null=True)
     transcript_text = models.TextField(blank=True, null=True)
@@ -28,3 +37,6 @@ class VideoModel(models.Model):
 
     def __str__(self):
         return self.title
+
+    # def save(self, **kwargs):
+        # super().save(**kwargs)
