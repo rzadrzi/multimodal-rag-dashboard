@@ -136,3 +136,56 @@ STATIC_ROOT = BASE_DIR / 'templates' / 'statics'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
+
+from django.urls import reverse_lazy
+
+UNFOLD = {
+
+    "SITE_TITLE": "Multimodal RAG Dashboard",
+    "SITE_HEADER": "Multimodal RAG Dashboard",
+    "SITE_URL": "/admin/",
+    "SHOW_LANGUAGES": False,
+    "SHOW_THEME_TOGGLE": True,
+
+    "SIDEBAR": {
+        "show_search": False,
+        "show_all_applications": False,
+        "icon": "book",
+        "navigation": [
+            {
+                "title": "MAIN",
+                # "icon":"heroicons_outline:book-open"
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "book",
+                        "link": reverse_lazy("admin:index")
+                    },
+                    {
+                        "title": "Group",
+                        "icon": "people",
+                        # "model":"auth.User"
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                        "permission": lambda request: request.user.has_perm("auth.view_user")
+                    },
+
+                    {
+                        "title": "User",
+                        "icon": "people",
+                        # "model":"auth.User"
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                        "permission": lambda request: request.user.has_perm("auth.view_user")
+                    },
+                    # {
+                    #     "title": "Upload",
+                    #     "icon": "upload",
+                    #     "link": reverse_lazy("admin:video_videomodel_changelist")
+                    # },
+                ]
+            }
+        ]
+    }
+}
