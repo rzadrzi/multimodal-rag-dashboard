@@ -15,3 +15,5 @@ staticfiles/
 statics/
 
 *.sqlite3
+
+migrations/
