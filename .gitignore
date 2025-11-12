@@ -13,3 +13,5 @@ wheels/
 
 staticfiles/
 statics/
+
+*.sqlite3
