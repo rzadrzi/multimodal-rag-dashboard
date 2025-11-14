@@ -11,17 +11,10 @@ class VideoModel(models.Model):
         'FA':'fa',
         'EN':'en'
     }
+
     class Status(models.TextChoices):
-        # UPLOAD ="UPLOAD", _("upload")
-        # AUDIO = 'AUDIO', _('audio')
         UPLOAD ="upload"
         AUDIO = "audio"
-
-    STATUS = {
-        'UPLOAD':'upload',
-        'AUDIO':'audio'
-    }
-
 
     class Meta:
         verbose_name = 'Upload Video'
