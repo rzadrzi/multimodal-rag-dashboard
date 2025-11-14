@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class VideoModel(models.Model):
@@ -15,6 +16,7 @@ class VideoModel(models.Model):
     class Status(models.TextChoices):
         UPLOAD ="upload"
         AUDIO = "audio"
+        TRANSCRIPT = "transcript"
 
     class Meta:
         verbose_name = 'Upload Video'
@@ -40,5 +42,7 @@ class VideoModel(models.Model):
     def __str__(self):
         return self.title
 
-    # def save(self, **kwargs):
-        # super().save(**kwargs)
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+
+        super(VideoModel, self).save(*args, **kwargs)
