@@ -11,6 +11,11 @@ class VideoModel(models.Model):
         'FA':'fa',
         'EN':'en'
     }
+    class Status(models.TextChoices):
+        # UPLOAD ="UPLOAD", _("upload")
+        # AUDIO = 'AUDIO', _('audio')
+        UPLOAD ="upload"
+        AUDIO = "audio"
 
     STATUS = {
         'UPLOAD':'upload',
@@ -25,7 +30,7 @@ class VideoModel(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
     lang = models.CharField(choices=LANG, null=True, blank=True)
-    status = models.CharField(choices=STATUS, null=True, blank=True)
+    status = models.CharField(choices=Status, default=Status.UPLOAD)
     video = models.FileField(upload_to="upload/videos", null=True, blank=True)
     audio = models.FileField(upload_to="upload/audios", blank=True, null=True)
     transcript_text = models.TextField(blank=True, null=True)
