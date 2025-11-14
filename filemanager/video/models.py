@@ -1,5 +1,3 @@
-from random import choice
-
 from django.db import models
 
 # Create your models here.
@@ -14,15 +12,21 @@ class VideoModel(models.Model):
         'EN':'en'
     }
 
+    STATUS = {
+        'UPLOAD':'upload',
+        'AUDIO':'audio'
+    }
+
 
     class Meta:
-        verbose_name = 'Upload'
-        verbose_name_plural = 'Uploads'
+        verbose_name = 'Upload Video'
+        verbose_name_plural = 'Videos'
 
     title = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
-    lang = models.CharField(choices=LANG)
-    video = models.FileField(upload_to="upload/videos")
+    lang = models.CharField(choices=LANG, null=True, blank=True)
+    status = models.CharField(choices=STATUS, null=True, blank=True)
+    video = models.FileField(upload_to="upload/videos", null=True, blank=True)
     audio = models.FileField(upload_to="upload/audios", blank=True, null=True)
     transcript_text = models.TextField(blank=True, null=True)
     transcript_jsonl = models.FileField(

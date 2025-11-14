@@ -10,18 +10,18 @@ from django.urls import path
 @admin.register(VideoModel)
 class VideoAdmin(ModelAdmin):
     # change_form_template = "admin/upload_video.html"
-    list_display = ("title", "created_at", "updated_at")
+    list_display = ("title", "status", "created_at", "updated_at")
     list_filter = ("created_at", "updated_at")
     search_fields = ("title", "created_at", "updated_at")
     list_per_page = 25
 
-    def get_urls(self) -> list[URLPattern]:
-        urls = super().get_urls()
-        my_urls = [path("my_view/", self.admin_site.admin_view)]
+    # def get_urls(self) -> list[URLPattern]:
+    #     urls = super().get_urls()
+    #     my_urls = [path("my_view/", self.admin_site.admin_view)]
 
     def get_fields(self, request, obj = None):
         if obj is None:
-            return ("title", "video")
+            return ("title", "lang" ,"video")
         else:
             return (
                 "title",
