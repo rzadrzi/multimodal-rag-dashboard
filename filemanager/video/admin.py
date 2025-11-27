@@ -31,5 +31,6 @@ class VideoAdmin(ModelAdmin):
                 "transcript_jsonl"
             )
 
+
     def video_icon(self, obj):
         return format_html("ERE" if obj.video else "ttt")

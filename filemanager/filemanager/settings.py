@@ -52,7 +52,6 @@ INSTALLED_APPS = [
 
     'video',
 
-
     'django_cleanup.apps.CleanupConfig',
     'auditlog'
 ]
