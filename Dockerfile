@@ -1,6 +1,4 @@
 FROM ghcr.io/astral-sh/uv:0.9.5-python3.14-trixie-slim
-# FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim
-# FROM python:3.12-bookworm
 
 # Install the project into `/app`
 WORKDIR /app
@@ -36,9 +34,31 @@ COPY . .
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-dev
 
-CMD bash -lc " uv run filemanager/manage.py makemigrations &&\
-uv run filemanager/manage.py migrate &&\
-uv run gunicorn --bind 0.0.0.0:8000 --workers 3 filemanager.wsgi:application"
+# Set working directory to Django project
+WORKDIR /app/filemanager
 
-#uv run filemanager/manage.py runserver 0.0.0.0:8000"
+# Django settings module
+ENV DJANGO_SETTINGS_MODULE=filemanager.settings
+
+# Expose port
+EXPOSE 8000
+
+
+RUN uv run manage.py makemigrations &&\
+    uv run manage.py migrate &&\
+    uv run manage.py collectstatic --noinput
+
+
+
+CMD ["uv", "run", "gunicorn", "filemanager.wsgi:application", \
+    "--bind=0.0.0.0:8000", \
+    "--workers=4", \
+    "--timeout=60", \
+    "--log-level=info"]
+
+
+# docker exec -it <container_id> bash
+# cd ..
+# uv run filemanager/manage.py makemigrations
+# uv run filemanager/manage.py migrate
 

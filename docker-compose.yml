@@ -2,8 +2,11 @@ services:
 #  db:
 #    image: postgres:latest
 #    restart: always
+
   web:
     build: .
+#      context: filemanager
+#      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
