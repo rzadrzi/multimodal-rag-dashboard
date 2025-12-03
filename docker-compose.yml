@@ -2,6 +2,23 @@ services:
 #  db:
 #    image: postgres:latest
 #    restart: always
+  nginx:
+    image: nginx:latest
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+
+    ports:
+      - 1337:80
+
+      # Storage volumes
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    depends_on:
+      - web
+    restart: "on-failure"
+
 
   web:
     build:
@@ -26,18 +43,6 @@ services:
       DJANGO_SETTINGS_MODULE: filemanager.settings
       PYTHONUNBUFFERED: 1
       PYTHONDONTWRITEBYTECODE: 1
-
-#    command: >
-#      sh -c "
-#        uv run manage.py collectstatic --noinput &&
-#        uv run manage.py migrate &&
-#        uv run gunicorn filemanager.wsgi:application
-#        --bind 0.0.0.0:8000
-#        --workers 4
-#      "
-
-
-
 
 
 #docker compose up --build
