@@ -15,5 +15,6 @@ dependencies = [
     "gunicorn>=23.0.0",
     "pip>=25.3",
     "psycopg2-binary>=2.9.11",
+    "python-dotenv>=1.2.1",
     "sqlparse>=0.5.3",
 ]
