@@ -39,5 +39,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 CMD bash -lc " uv run filemanager/manage.py makemigrations &&\
 uv run filemanager/manage.py migrate &&\
 uv run gunicorn --bind 0.0.0.0:8000 --workers 3 filemanager.wsgi:application"
+
 #uv run filemanager/manage.py runserver 0.0.0.0:8000"
 
