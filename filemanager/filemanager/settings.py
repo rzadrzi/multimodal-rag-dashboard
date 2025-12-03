@@ -145,8 +145,8 @@ STATIC_ROOT = BASE_DIR / 'templates' / 'statics'
 #     BASE_DIR / "templates" / "statics"
 # ]
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'staticfiles'/ 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'staticfiles'/ 'media'
 
 
 # Default primary key field type
