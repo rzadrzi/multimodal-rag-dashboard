@@ -4,10 +4,40 @@ services:
 #    restart: always
 
   web:
-    build: .
-#      context: filemanager
-#      dockerfile: Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: filemanager
+
     ports:
       - "8000:8000"
+
     volumes:
-      - .:/app/
+#      - .:/app/
+      - ./filemanager:/app/filemanager
+
+    restart: always
+
+    env_file:
+      - .env
+
+    environment:
+      DJANGO_SETTINGS_MODULE: filemanager.settings
+      PYTHONUNBUFFERED: 1
+      PYTHONDONTWRITEBYTECODE: 1
+
+#    command: >
+#      sh -c "
+#        uv run manage.py collectstatic --noinput &&
+#        uv run manage.py migrate &&
+#        uv run gunicorn filemanager.wsgi:application
+#        --bind 0.0.0.0:8000
+#        --workers 4
+#      "
+
+
+
+
+
+#docker compose up --build

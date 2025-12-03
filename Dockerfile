@@ -43,12 +43,12 @@ ENV DJANGO_SETTINGS_MODULE=filemanager.settings
 # Expose port
 EXPOSE 8000
 
+RUN uv run manage.py collectstatic --noinput
 
-RUN uv run manage.py makemigrations &&\
-    uv run manage.py migrate &&\
-    uv run manage.py collectstatic --noinput
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["uv", "run", "gunicorn", "filemanager.wsgi:application", \
     "--bind=0.0.0.0:8000", \
@@ -56,7 +56,7 @@ CMD ["uv", "run", "gunicorn", "filemanager.wsgi:application", \
     "--timeout=60", \
     "--log-level=info"]
 
-
+# uv run gunicorn filemanager.wsgi:application --bind=0.0.0.0:8000 --workers=4 --timeout=60 --log-level=info
 # docker exec -it <container_id> bash
 # cd ..
 # uv run filemanager/manage.py makemigrations

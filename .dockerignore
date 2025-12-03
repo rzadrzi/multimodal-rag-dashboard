@@ -26,5 +26,5 @@ __pycache__/
 .vscode/
 
 # Env files (keep secrets out of Git)
-.env
-.env.*
+#.env
+#.env.*
