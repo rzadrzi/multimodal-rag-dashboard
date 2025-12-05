@@ -12,8 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
-# from dotenv import load_dotenv
-# load_dotenv()
+from django.urls import reverse_lazy
 
 # from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL
 
@@ -30,10 +29,10 @@ SECRET_KEY = 'django-insecure-bu+@hrh3g$e&0jh#p47xsa)&p=1(zc8_2zld01kz0w$kneh^mv
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-DEBUG=os.getenv('DEBUG', True)
+DEBUG=os.getenv('DEBUG', False)=="True"
 
-ALLOWED_HOSTS = ["*"]
-
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 # Application definition
 
@@ -144,21 +143,37 @@ STATIC_ROOT = BASE_DIR / 'templates' / 'staticfiles'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'templates'/ 'mediafiles'
 
-#
 # STATICFILES_DIRS = [
 #     BASE_DIR / "templates" / "statics"
 # ]
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}
+
 CRISPY_TEMPLATE_PACK = "unfold_crispy"
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
-
-from django.urls import reverse_lazy
 
 UNFOLD = {
 

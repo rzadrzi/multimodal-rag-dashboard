@@ -1,0 +1,14 @@
+asgiref==3.10.0
+crispy-bootstrap5==2025.6
+Django==5.2.8
+django-auditlog==3.3.0
+django-cleanup==9.0.0
+django-crispy-forms==2.5
+django-unfold==0.71.0
+gunicorn==23.0.0
+packaging==25.0
+psycopg2-binary==2.9.11
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.1
+six==1.17.0
+sqlparse==0.5.3

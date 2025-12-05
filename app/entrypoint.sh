@@ -2,8 +2,8 @@
 set -e
 
 echo "➡️ Running migrations..."
-uv run manage.py makemigrations --noinput || true
-uv run manage.py migrate --noinput
+python manage.py makemigrations --noinput || true
+python manage.py migrate --noinput
 
 echo "➡️ Starting Gunicorn..."
 exec "$@"
