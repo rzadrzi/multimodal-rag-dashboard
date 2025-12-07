@@ -2,47 +2,33 @@ services:
 #  db:
 #    image: postgres:latest
 #    restart: always
-  nginx:
-    image: nginx:latest
+#  nginx:
+#    image: nginx
+#    build:
+#      context: nginx
+#      dockerfile: Dockerfile
+#    ports:
+#      - 8000:80
+#
+#      # Storage volumes
+#    volumes:
+#      - static_volume:/home/app/filemanager/templates/statics
+##      - media_volume:/home/app/web/mediafiles
+#    depends_on:
+#      - app
+#    restart: "on-failure"
+
+  app:
     build:
-      context: nginx
+      context: filemanager_app
       dockerfile: Dockerfile
-
-    ports:
-      - 1337:80
-
-      # Storage volumes
-    volumes:
-      - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
-    depends_on:
-      - web
-    restart: "on-failure"
-
-
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
-    container_name: filemanager
-
     ports:
       - "8000:8000"
-
     volumes:
-#      - .:/app/
-      - ./filemanager:/app/filemanager
-
+      - ./app:/app
     restart: always
-
+    container_name: app
     env_file:
       - .env
-
-    environment:
-      DJANGO_SETTINGS_MODULE: filemanager.settings
-      PYTHONUNBUFFERED: 1
-      PYTHONDONTWRITEBYTECODE: 1
-
 
 #docker compose up --build
