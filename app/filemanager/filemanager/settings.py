@@ -56,31 +56,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 'crispy_forms',
-    # 'crispy_bootstrap5',
-    # "unfold",  # before django.contrib.admin
-    # "unfold.contrib.filters",  # optional, if special filters are needed
-    # "unfold.contrib.forms",  # optional, if special form elements are needed
-    # "unfold.contrib.inlines",  # optional, if special inlines are needed
-    # "unfold.contrib.import_export",  # optional, if django-import-export package is used
-    # "unfold.contrib.guardian",  # optional, if django-guardian package is used
-    # "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
-    # "unfold.contrib.location_field",  # optional, if django-location-field package is used
-    # "unfold.contrib.constance",  # optional, if django-constance package is used
-
-
     'video',
 
-    'django_cleanup.apps.CleanupConfig',
+    'django_cleanup.apps.CleanupConfig', # It must be after my apps
     'auditlog'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-
-    
+    "whitenoise.middleware.WhiteNoiseMiddleware", # for staticfiles and media !!!!
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -107,6 +91,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'filemanager.wsgi.application'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # !!!!!
 
 
 # Database
@@ -155,7 +141,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR.parent / 'staticfiles'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
