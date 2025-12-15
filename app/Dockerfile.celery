@@ -1,4 +1,3 @@
-
 FROM python:latest
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -7,25 +6,30 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+# System dependencies
 RUN apt-get update && apt-get install -y \
   build-essential \
   libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
+# Install Python deps
 COPY requirements.txt .
-
 RUN pip install --upgrade pip && \
   pip install -r requirements.txt
 
+# Copy project
 COPY . .
 
+# Move into Django project directory
 WORKDIR /app/filemanager
-#ENV DJANGO_SETTINGS_MODULE=filemanager.settings \
-#    PORT=8000
+
+# Django settings
 ENV DJANGO_SETTINGS_MODULE=filemanager.settings
 
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
+# Entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
@@ -33,8 +37,11 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 8000
 
+# Default command is Django with Gunicorn
+# Celery will override this via docker-compose
 CMD ["gunicorn", "filemanager.wsgi:application", \
   "--bind=0.0.0.0:8000", \
   "--workers=2", \
   "--timeout=60", \
   "--log-level=info"]
+
